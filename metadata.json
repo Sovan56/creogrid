@@ -1,0 +1,6 @@
+{
+  "name": "Influence Flow Spot",
+  "description": "An elegant, high-converting influencer marketing platform showing AI-powered discovery, automated outreach flows, and active ROI analytics.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
