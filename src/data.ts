@@ -161,7 +161,7 @@ export const CREATORS: Creator[] = [
 export const TESTIMONIALS: Testimonial[] = [
   {
     id: 't-1',
-    quote: "By switching our influencer campaigns to InfluenceFlow, we cut our yearly platform tooling cost from $24,000 to basically nothing, while multiplying our active outreach response rate by 3x.",
+    quote: "By switching our influencer campaigns to Creogrid, we cut our yearly platform tooling cost from $24,000 to basically nothing, while multiplying our active outreach response rate by 3x.",
     author: "Jessica Martinez",
     role: "VP of Growth",
     company: "Lumi Skin Co.",
@@ -188,8 +188,8 @@ export const TESTIMONIALS: Testimonial[] = [
 export const FAQS: FaqItem[] = [
   {
     id: 'faq-1',
-    question: "How is InfluenceFlow so affordable?",
-    answer: "Legacy influencer tools charge $24,000+ anually to cover their heavy outbound corporate sales teams, physical offices, and high markup quotas. InfluenceFlow is designed as a modular self-serve flow platform, focusing purely on smart technology and modern cloud engineering. We pass the cost savings directly to brands and creators.",
+    question: "How is Creogrid so affordable?",
+    answer: "Legacy influencer tools charge $24,000+ anually to cover their heavy outbound corporate sales teams, physical offices, and high markup quotas. Creogrid is designed as a modular self-serve flow platform, focusing purely on smart technology and modern cloud engineering. We pass the cost savings directly to brands and creators.",
   },
   {
     id: 'faq-2',

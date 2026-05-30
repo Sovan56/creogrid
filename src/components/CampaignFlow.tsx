@@ -7,8 +7,11 @@ import { useState } from 'react';
 import { Calendar, Search, Sparkles, Send, ShieldAlert, BadgeInfo, Play, CheckCircle } from 'lucide-react';
 import { motion, AnimatePresence } from 'motion/react';
 import { CAMPAIGN_STAGES } from '../data';
+import { useMotionSettings } from './MotionContext';
+import Reveal from './Reveal';
 
 export default function CampaignFlow() {
+  const { reducedMotion } = useMotionSettings();
   const [activeStage, setActiveStage] = useState('discovery');
   const [draftApproved, setDraftApproved] = useState<boolean | null>(null);
   const [liveCounter, setLiveCounter] = useState(1452);
@@ -24,25 +27,25 @@ export default function CampaignFlow() {
   return (
     <section
       id="pipeline"
-      className="relative py-24 px-6 overflow-hidden bg-brand-bg bg-grid"
+      className="relative py-24 px-6 overflow-hidden bg-[#0D0D16] bg-grid"
     >
       {/* Background radial overlays */}
-      <div className="absolute top-[20%] left-[10%] w-[400px] h-[400px] bg-brand-alt/5 rounded-full blur-[100px] -z-10" />
-      <div className="absolute bottom-[10%] right-[10%] w-[350px] h-[350px] bg-brand-primary/5 rounded-full blur-[100px] -z-10" />
+      <div className="absolute top-[20%] left-[10%] w-[400px] h-[400px] bg-[#FF2D7A]/5 rounded-full blur-[100px] -z-10" />
+      <div className="absolute bottom-[10%] right-[10%] w-[350px] h-[350px] bg-[#5B2CFF]/5 rounded-full blur-[100px] -z-10" />
 
       <div className="max-w-7xl mx-auto w-full">
-        {/* Header details */}
-        <div className="text-center space-y-4 mb-16">
-          <span className="text-xs font-mono font-bold tracking-wider text-brand-accent uppercase bg-indigo-500/10 px-3 py-1 rounded-full border border-indigo-500/25">
+        {/* Header details wrapped in Reveal */}
+        <Reveal direction="up" className="text-center space-y-4 mb-16">
+          <span className="text-xs font-mono font-bold tracking-wider text-[#FF2D7A] uppercase bg-[#5B2CFF]/10 px-3 py-1 rounded-full border border-[#5B2CFF]/25">
             PLATFORM PIPELINE OUTLINE
           </span>
           <h2 className="text-3xl md:text-4xl lg:text-5xl font-display font-medium text-white tracking-tight">
-            How a campaign <span className="text-transparent bg-clip-text bg-gradient-to-r from-brand-alt to-brand-accent">flows</span> on our platform.
+            How a campaign <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#FF2D7A] to-[#FF9A1F]">flows</span> on our platform.
           </h2>
           <p className="text-gray-400 max-w-xl mx-auto text-sm md:text-base">
             Manage your entire creator lifecycle in one simple, continuous automated workspace. No external software, integrations, or email chains.
           </p>
-        </div>
+        </Reveal>
 
         {/* The horizontal timeline stages board */}
         <div className="grid grid-cols-2 md:grid-cols-5 gap-3 md:gap-4 mb-12">
@@ -54,14 +57,14 @@ export default function CampaignFlow() {
                 onClick={() => setActiveStage(stage.id)}
                 className={`p-4 rounded-xl text-left border transition-all text-xs flex flex-col justify-between relative group ${
                   isActive
-                    ? 'bg-indigo-950/40 border-brand-primary shadow-[0_0_20px_rgba(99,102,241,0.15)] bg-grid'
+                    ? 'bg-indigo-950/40 border-[#5B2CFF] shadow-[0_0_20px_rgba(91,44,255,0.15)] bg-grid'
                     : 'bg-white/5 border-white/5 hover:bg-[#120e20] hover:border-white/10'
                 }`}
               >
                 <div className="flex justify-between items-center w-full mb-3">
                   <span
                     className={`px-2 py-0.5 rounded text-[9px] font-mono font-bold uppercase ${
-                      isActive ? 'bg-brand-primary/20 text-indigo-300' : 'bg-white/5 text-gray-400'
+                      isActive ? 'bg-[#5B2CFF]/20 text-indigo-300' : 'bg-white/5 text-gray-400'
                     }`}
                   >
                     Stage {CAMPAIGN_STAGES.indexOf(stage) + 1}
@@ -80,7 +83,7 @@ export default function CampaignFlow() {
                 {isActive && (
                   <motion.div
                     layoutId="activeIndicator"
-                    className="absolute bottom-0 left-4 right-4 h-0.5 bg-gradient-to-r from-brand-primary to-brand-accent rounded-full"
+                    className="absolute bottom-0 left-4 right-4 h-0.5 bg-gradient-to-r from-[#5B2CFF] to-[#FF2D7A] rounded-full"
                   />
                 )}
               </button>
@@ -102,7 +105,7 @@ export default function CampaignFlow() {
                 transition={{ duration: 0.4 }}
                 className="space-y-4"
               >
-                <div className="inline-flex items-center gap-1.5 font-mono text-xs text-brand-accent uppercase font-bold">
+                <div className="inline-flex items-center gap-1.5 font-mono text-xs text-[#FF2D7A] uppercase font-bold">
                   <Sparkles className="w-3.5 h-3.5 animate-bounce" />
                   <span>
                     Phase {CAMPAIGN_STAGES.findIndex((s) => s.id === activeStage) + 1} Automation Action
@@ -158,7 +161,7 @@ export default function CampaignFlow() {
           </div>
 
           {/* Right panel (Grid 7 column): Fully operational interactive demo of active stage */}
-          <div className="lg:col-span-7 bg-[#0b0817] rounded-2xl p-6 border border-white/5 overflow-hidden shadow-xl min-h-[350px] flex flex-col justify-between">
+          <div className="lg:col-span-7 bg-[#0D0D16] rounded-2xl p-6 border border-white/5 overflow-hidden shadow-xl min-h-[350px] flex flex-col justify-between">
             <AnimatePresence mode="wait">
               {/* Stage 1 Demo: Discovery Grid mockup */}
               {activeStage === 'discovery' && (
@@ -184,12 +187,12 @@ export default function CampaignFlow() {
                       </div>
                       <span className="text-[10px] font-mono text-gray-400">12,422 entries</span>
                     </div>
-                    <div className="p-3 bg-[#110e20] border border-brand-primary/20 rounded-xl flex items-center justify-between shadow-lg">
+                    <div className="p-3 bg-[#141424] border border-[#5B2CFF]/20 rounded-xl flex items-center justify-between shadow-lg">
                       <div className="flex items-center gap-2">
-                        <span className="w-2 h-2 rounded-full bg-brand-accent animate-ping" />
+                        <span className="w-2 h-2 rounded-full bg-[#FF9A1F] animate-ping" />
                         <p className="text-xs font-semibold text-white">#CleanBeautyLifestyle</p>
                       </div>
-                      <span className="text-[10px] font-mono text-brand-accent">8,210 entries (98% match)</span>
+                      <span className="text-[10px] font-mono text-[#FF9A1F]">8,210 entries (98% match)</span>
                     </div>
                     <div className="p-3 bg-white/5 border border-white/5 rounded-xl flex items-center justify-between">
                       <div className="flex items-center gap-2">
@@ -200,10 +203,10 @@ export default function CampaignFlow() {
                     </div>
                   </div>
 
-                  <div className="p-3 bg-indigo-500/10 rounded-xl border border-indigo-500/20 flex gap-2.5 items-start text-xs text-indigo-200 mt-2">
-                    <BadgeInfo className="w-4 h-4 mt-0.5 shrink-0 text-brand-primary" />
+                  <div className="p-3 bg-[#5B2CFF]/10 rounded-xl border border-[#5B2CFF]/20 flex gap-2.5 items-start text-xs text-indigo-200 mt-2">
+                    <BadgeInfo className="w-4 h-4 mt-0.5 shrink-0 text-[#5B2CFF]" />
                     <p className="leading-relaxed">
-                      InfluenceFlow sorts profiles by **active consistency**, skipping empty profiles to locate high-retention influencers.
+                      Creogrid sorts profiles by **active consistency**, skipping empty profiles to locate high-retention influencers.
                     </p>
                   </div>
                 </motion.div>
@@ -241,12 +244,12 @@ export default function CampaignFlow() {
                       <span className="text-[10px] text-gray-400 font-bold">✓ OPENED & REPLY</span>
                     </div>
 
-                    <div className="p-3 bg-indigo-500/10 border border-indigo-500/20 rounded-xl flex justify-between items-center text-[11px] animate-pulse">
-                      <div className="flex items-center gap-2 text-indigo-300">
+                    <div className="p-3 bg-emerald-500/10 border border-emerald-500/20 rounded-xl flex justify-between items-center text-[11px] animate-pulse">
+                      <div className="flex items-center gap-2 text-emerald-300">
                         <Send className="w-4 h-4 shrink-0" />
                         <span>Step 3: Campaign Active Brief (Day 5)</span>
                       </div>
-                      <span className="text-[10px] text-indigo-400 font-bold">⌛ BREEZE INITIATE</span>
+                      <span className="text-[10px] text-emerald-400 font-bold">⌛ BREEZE INITIATE</span>
                     </div>
                   </div>
 
@@ -349,7 +352,7 @@ export default function CampaignFlow() {
                           </button>
                           <button
                             onClick={() => setDraftApproved(true)}
-                            className="px-3 py-1.5 rounded-lg bg-brand-success hover:brightness-110 text-[#07050d] text-xs font-bold transition-all cursor-pointer"
+                            className="px-3 py-1.5 rounded-lg bg-emerald-500 hover:brightness-110 text-[#0D0D16] text-xs font-bold transition-all cursor-pointer"
                           >
                             Approve Draft
                           </button>
@@ -367,7 +370,7 @@ export default function CampaignFlow() {
                           </span>
                           <button
                             onClick={() => setDraftApproved(null)}
-                            className="text-[9px] text-indigo-400 hover:underline mt-1 cursor-pointer"
+                            className="text-[9px] text-[#A23CFF] hover:underline mt-1 cursor-pointer"
                           >
                             Undo action
                           </button>
@@ -376,9 +379,9 @@ export default function CampaignFlow() {
                     </div>
                   </div>
 
-                  <div className="p-3 bg-indigo-500/10 rounded-xl border border-indigo-500/20 text-xs text-indigo-200">
+                  <div className="p-3 bg-[#5B2CFF]/10 rounded-xl border border-[#5B2CFF]/20 text-xs text-indigo-200">
                     <p className="leading-relaxed font-sans">
-                      Once approved, posting schedule instructions are released to the developer's calendar system instantly.
+                      Once approved, posting schedule instructions are released to the marketer's calendar system instantly.
                     </p>
                   </div>
                 </motion.div>
@@ -406,9 +409,9 @@ export default function CampaignFlow() {
                       </span>
                     </div>
 
-                    <div className="p-3.5 bg-[#110e20] rounded-xl border border-brand-accent/20 flex flex-col justify-between shadow-lg">
-                      <span className="text-[10px] font-mono text-brand-accent uppercase">Influence Sales conversions</span>
-                      <span className="text-lg font-bold text-brand-accent mt-1.5 font-mono">
+                    <div className="p-3.5 bg-[#141424] rounded-xl border border-[#FF2D7A]/20 flex flex-col justify-between shadow-lg">
+                      <span className="text-[10px] font-mono text-[#FF2D7A] uppercase">Influence Sales conversions</span>
+                      <span className="text-lg font-bold text-[#FF2D7A] mt-1.5 font-mono">
                         {formatNumber(liveCounter)} order
                       </span>
                     </div>
@@ -422,13 +425,13 @@ export default function CampaignFlow() {
                   </div>
 
                   {/* Trigger loop */}
-                  <div className="flex justify-between items-center bg-indigo-500/10 p-3.5 rounded-xl border border-indigo-500/20">
+                  <div className="flex justify-between items-center bg-[#5B2CFF]/10 p-3.5 rounded-xl border border-[#5B2CFF]/20">
                     <p className="text-xs text-indigo-200 max-w-xs leading-normal">
                       Click the simulated tracking button to update analytics in real-time.
                     </p>
                     <button
                       onClick={handleLiveCounterTick}
-                      className="px-4 py-2 bg-brand-primary hover:brightness-110 text-white rounded-lg text-xs font-semibold cursor-pointer shadow-md shadow-brand-primary/10 select-none text-center"
+                      className="px-4 py-2 bg-[#5B2CFF] hover:brightness-110 text-white rounded-lg text-xs font-semibold cursor-pointer shadow-md shadow-[#5B2CFF]/10 select-none text-center"
                     >
                       🚀 Tick Feed Counter
                     </button>

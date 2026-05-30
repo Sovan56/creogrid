@@ -6,8 +6,11 @@
 import { useState } from 'react';
 import { DollarSign, Percent, Eye, ShoppingCart, Info, TrendingUp } from 'lucide-react';
 import { motion } from 'motion/react';
+import { useMotionSettings } from './MotionContext';
+import Reveal from './Reveal';
 
 export default function Calculator() {
+  const { reducedMotion } = useMotionSettings();
   const [budget, setBudget] = useState(5000); // Default $5,000
   const [platform, setPlatform] = useState<'tiktok' | 'instagram' | 'youtube'>('tiktok');
   const [niche, setNiche] = useState<string>('Fashion');
@@ -82,25 +85,25 @@ export default function Calculator() {
   return (
     <section
       id="calculator"
-      className="relative py-24 px-6 overflow-hidden bg-[#07050d] border-t border-indigo-500/5"
+      className="relative py-24 px-6 overflow-hidden bg-[#0D0D16] border-t border-white/5"
     >
       {/* Background glow structures */}
-      <div className="absolute top-[25%] left-[20%] w-[450px] h-[450px] bg-brand-primary/5 rounded-full blur-[100px] -z-10 animate-pulse duration-[12s]" />
-      <div className="absolute bottom-[20%] right-[10%] w-[350px] h-[350px] bg-indigo-500/5 rounded-full blur-[100px] -z-10" />
+      <div className="absolute top-[25%] left-[20%] w-[450px] h-[450px] bg-[#5B2CFF]/5 rounded-full blur-[100px] -z-10 animate-pulse duration-[12s]" />
+      <div className="absolute bottom-[20%] right-[10%] w-[350px] h-[350px] bg-[#FF2D7A]/5 rounded-full blur-[100px] -z-10" />
 
       <div className="max-w-6xl mx-auto w-full">
-        {/* Title elements */}
-        <div className="text-center space-y-4 mb-16">
-          <span className="text-xs font-mono font-bold tracking-wider text-brand-accent uppercase bg-indigo-500/10 px-3 py-1 rounded-full border border-indigo-500/25">
+        {/* Title elements wrapped in Reveal */}
+        <Reveal direction="up" className="text-center space-y-4 mb-16">
+          <span className="text-xs font-mono font-bold tracking-wider text-[#FF2D7A] uppercase bg-[#5B2CFF]/10 px-3 py-1 rounded-full border border-[#5B2CFF]/25">
             PLATFORM ROI FORMULATOR
           </span>
           <h2 className="text-3xl md:text-4xl lg:text-5xl font-display font-medium text-white tracking-tight">
-            Influence Campaign <span className="text-transparent bg-clip-text bg-gradient-to-r from-teal-400 via-indigo-400 to-purple-400">Estimator</span>.
+            Creogrid Campaign <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#FF2D7A] via-[#A23CFF] to-[#5B2CFF]">Estimator</span>.
           </h2>
           <p className="text-gray-400 max-w-xl mx-auto text-sm md:text-base">
             Input your budget constraints, pick your platform channel, and calculate your simulated campaign view counts, conversion, and cash saved.
           </p>
-        </div>
+        </Reveal>
 
         {/* Dual grid split layout */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch pt-4">
@@ -112,7 +115,7 @@ export default function Calculator() {
             <div className="space-y-4">
               <div className="flex justify-between items-center">
                 <label className="text-sm font-semibold text-white">Estimated Campaign Budget</label>
-                <span className="px-3 py-1.5 rounded-lg bg-indigo-500/10 border border-indigo-500/20 font-bold font-mono text-brand-accent text-sm md:text-base">
+                <span className="px-3 py-1.5 rounded-lg bg-[#5B2CFF]/10 border border-[#5B2CFF]/20 font-bold font-mono text-[#FF2D7A] text-sm md:text-base">
                   {formatCurrency(budget)}
                 </span>
               </div>
@@ -123,7 +126,7 @@ export default function Calculator() {
                 step="500"
                 value={budget}
                 onChange={(e) => setBudget(Number(e.target.value))}
-                className="w-full h-2 bg-white/10 rounded-lg appearance-none cursor-pointer accent-brand-accent transition-all"
+                className="w-full h-2 bg-white/10 rounded-lg appearance-none cursor-pointer accent-[#FF2D7A] transition-all"
               />
               <div className="flex justify-between text-[10px] text-gray-500 font-mono">
                 <span>Min: $500</span>
@@ -142,7 +145,7 @@ export default function Calculator() {
                     onClick={() => setPlatform(ch)}
                     className={`py-3.5 rounded-xl border text-xs font-bold transition-all uppercase tracking-wider ${
                       platform === ch
-                        ? 'bg-brand-primary/25 border-brand-primary text-white shadow-[0_0_15px_rgba(99,102,241,0.2)]'
+                        ? 'bg-[#5B2CFF]/25 border-[#5B2CFF] text-white shadow-[0_0_15px_rgba(91,44,255,0.2)]'
                         : 'bg-white/5 border-white/5 text-gray-400 hover:bg-white/10 hover:border-white/10 hover:text-white'
                     }`}
                   >
@@ -162,7 +165,7 @@ export default function Calculator() {
                     onClick={() => setNiche(n)}
                     className={`py-3 rounded-lg border text-xs font-semibold transition-all ${
                       niche === n
-                        ? 'bg-indigo-500/10 border-brand-accent text-white shadow-[0_0_10px_rgba(6,182,212,0.15)]'
+                        ? 'bg-[#5B2CFF]/10 border-[#FF2D7A] text-white shadow-[0_0_10px_rgba(255,45,122,0.15)]'
                         : 'bg-white/5 border-white/5 text-gray-400 hover:bg-white/10 hover:border-white/10 hover:text-white'
                     }`}
                   >
@@ -174,7 +177,7 @@ export default function Calculator() {
 
             {/* Mini explanatory banner */}
             <div className="p-3 bg-white/5 rounded-xl border border-white/5 flex gap-2.5 items-start text-xs text-gray-400">
-              <Info className="w-4 h-4 mt-0.5 shrink-0 text-brand-accent" />
+              <Info className="w-4 h-4 mt-0.5 shrink-0 text-[#FF9A1F]" />
               <p className="leading-relaxed leading-normal">
                 Multipliers are calculated based on public 2026 engagement and standard brand conversion statistics. Actual campaign returns can vary.
               </p>
@@ -182,14 +185,14 @@ export default function Calculator() {
           </div>
 
           {/* Right panel: Metric Outputs cards (6 Column) */}
-          <div className="lg:col-span-6 bg-[#0c0919] rounded-2xl p-6 md:p-8 border border-white/5 flex flex-col justify-between text-left relative overflow-hidden shadow-2xl">
+          <div className="lg:col-span-6 bg-[#0D0D16] rounded-2xl p-6 md:p-8 border border-white/5 flex flex-col justify-between text-left relative overflow-hidden shadow-2xl">
             {/* Top glass lighting decoration overlay */}
-            <div className="absolute top-0 right-0 w-32 h-32 bg-brand-primary/10 rounded-full blur-2xl" />
+            <div className="absolute top-0 right-0 w-32 h-32 bg-[#5B2CFF]/10 rounded-full blur-2xl" />
 
             {/* Campaign Output summary */}
             <div className="space-y-6">
               <div className="flex justify-between items-center pb-4 border-b border-white/5">
-                <span className="text-xs font-mono font-bold tracking-widest text-indigo-400 uppercase">
+                <span className="text-xs font-mono font-bold tracking-widest text-[#A23CFF] uppercase">
                   ESTIMATED STATISTICAL OUTPUT
                 </span>
                 <span className="text-xs text-brand-success font-semibold px-2 py-0.5 rounded bg-brand-success/10 border border-brand-success/20 font-mono">
@@ -202,12 +205,12 @@ export default function Calculator() {
                 
                 {/* Views Card */}
                 <div className="p-4 bg-white/5 rounded-2xl border border-white/5 flex items-center gap-3">
-                  <div className="w-9 h-9 rounded-lg bg-indigo-500/10 flex items-center justify-center border border-indigo-500/20 text-brand-primary">
+                  <div className="w-9 h-9 rounded-lg bg-[#5B2CFF]/10 flex items-center justify-center border border-[#5B2CFF]/20 text-[#5B2CFF]">
                     <Eye className="w-5 h-5" />
                   </div>
                   <div>
                     <p className="text-[10px] font-mono text-gray-500 uppercase">Impressions views</p>
-                    <p className="text-xl font-bold font-mono text-white mt-0.5 mt-1">{formatCompact(views)}</p>
+                    <p className="text-xl font-bold font-mono text-white mt-1">{formatCompact(views)}</p>
                   </div>
                 </div>
 
@@ -234,21 +237,21 @@ export default function Calculator() {
                 </div>
 
                 {/* ROAS Indicator */}
-                <div className="p-4 bg-[#110e20] rounded-2xl border border-brand-accent/25 flex items-center gap-3 shadow-lg">
-                  <div className="w-9 h-9 rounded-lg bg-brand-accent/10 flex items-center justify-center border border-brand-accent/20 text-brand-accent">
+                <div className="p-4 bg-[#141424] rounded-2xl border border-[#FF2D7A]/25 flex items-center gap-3 shadow-lg">
+                  <div className="w-9 h-9 rounded-lg bg-[#FF2D7A]/10 flex items-center justify-center border border-[#FF2D7A]/20 text-[#FF2D7A]">
                     <TrendingUp className="w-5 h-5 animate-pulse" />
                   </div>
                   <div>
-                    <p className="text-[10px] font-mono text-brand-accent uppercase leading-snug">Estimated ROAS</p>
-                    <p className="text-xl font-bold font-mono text-brand-accent mt-0.5 mt-1">{roas}x</p>
+                    <p className="text-[10px] font-mono text-[#FF2D7A] uppercase leading-snug">Estimated ROAS</p>
+                    <p className="text-xl font-bold font-mono text-[#FF2D7A] mt-1">{roas}x</p>
                   </div>
                 </div>
 
               </div>
 
               {/* Total revenue generated output block */}
-              <div className="bg-indigo-950/20 p-5 rounded-2xl border border-brand-primary/25 mt-4 text-left">
-                <span className="text-[10px] font-mono text-indigo-400 uppercase">Estimated campaign sales yield</span>
+              <div className="bg-[#5B2CFF]/10 p-5 rounded-2xl border border-[#5B2CFF]/25 mt-4 text-left">
+                <span className="text-[10px] font-mono text-indigo-300 uppercase">Estimated campaign sales yield</span>
                 <div className="flex flex-col md:flex-row md:items-baseline justify-between gap-1.5 mt-1.5">
                   <span className="text-3xl font-black font-mono text-white">
                     {formatCurrency(revenue)}

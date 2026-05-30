@@ -1,6 +1,6 @@
 {
-  "name": "Influence Flow Spot",
-  "description": "An elegant, high-converting influencer marketing platform showing AI-powered discovery, automated outreach flows, and active ROI analytics.",
+  "name": "Creogrid Spot",
+  "description": "Creogrid is a creator discovery and collaboration platform that connects brands with the right creators to build impactful partnerships.",
   "requestFramePermissions": [],
   "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
 }

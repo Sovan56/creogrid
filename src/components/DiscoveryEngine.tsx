@@ -8,13 +8,17 @@ import { Search, MapPin, Sparkles, Filter, ChevronRight, MessageSquare, Flame, T
 import { motion, AnimatePresence } from 'motion/react';
 import { CREATORS } from '../data';
 import { Creator, Platform } from '../types';
+import { useMotionSettings } from './MotionContext';
+import Reveal from './Reveal';
 
 export default function DiscoveryEngine() {
+  const { reducedMotion } = useMotionSettings();
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedPlatform, setSelectedPlatform] = useState<Platform | 'all'>('all');
   const [selectedCreator, setSelectedCreator] = useState<Creator | null>(null);
   const [generatedPitch, setGeneratedPitch] = useState('');
   const [selectedNiche, setSelectedNiche] = useState<string>('all');
+  const [copiedState, setCopiedState] = useState(false);
 
   // Gather unique niches
   const niches = ['all', ...Array.from(new Set(CREATORS.map((c) => c.niche.split(' & ')[0])))];
@@ -67,32 +71,32 @@ export default function DiscoveryEngine() {
   // Automated custom outreach pitch writer
   const handleGeneratePitch = (creator: Creator) => {
     const n = creator.niche.split(' & ')[0];
-    const pitch = `Hi ${creator.name},\n\nHope this is finding you well!\n\nI was looking through our influencer directory on InfluenceFlow and absolutely loved your content under the ${n} category. Your engagement rates are extraordinary (hitting around ${creator.engagement}%), particularly with your audience hub in New York/Austin!\n\nWe are launching a specialized campaign for a premium lifestyle label and think your unique aesthetic matches perfectly. Based on your rate of $${creator.costPerPost} per post, we would love to secure a pilot feature.\n\nLet me know if you would be open to reviewing the brief details!\n\nBest,\nCampaign Team`;
+    const pitch = `Hi ${creator.name},\n\nHope this is finding you well!\n\nI was looking through our influencer directory on Creogrid and absolutely loved your content under the ${n} category. Your engagement rates are extraordinary (hitting around ${creator.engagement}%), particularly with your audience hub in New York/Austin!\n\nWe are launching a specialized campaign for a premium lifestyle label and think your unique aesthetic matches perfectly. Based on your rate of $${creator.costPerPost} per post, we would love to secure a pilot feature.\n\nLet me know if you would be open to reviewing the brief details!\n\nBest,\nCampaign Team`;
     setGeneratedPitch(pitch);
   };
 
   return (
     <section
       id="discovery"
-      className="relative py-24 px-6 overflow-hidden bg-[#0a0712] border-t border-indigo-500/5"
+      className="relative py-24 px-6 overflow-hidden bg-[#0D0D16] border-t border-white/5"
     >
       {/* Visual lighting rings */}
-      <div className="absolute top-[15%] right-[5%] w-[450px] h-[450px] bg-brand-primary/5 rounded-full blur-[100px] -z-10" />
-      <div className="absolute bottom-[20%] left-[10%] w-[380px] h-[380px] bg-brand-accent/5 rounded-full blur-[100px] -z-10 animate-pulse duration-[10s]" />
+      <div className="absolute top-[15%] right-[5%] w-[450px] h-[450px] bg-[#5B2CFF]/5 rounded-full blur-[100px] -z-10" />
+      <div className="absolute bottom-[20%] left-[10%] w-[380px] h-[380px] bg-[#FF9A1F]/5 rounded-full blur-[100px] -z-10 animate-pulse duration-[10s]" />
 
       <div className="max-w-7xl mx-auto w-full">
-        {/* Head description */}
-        <div className="text-center space-y-4 mb-16">
-          <span className="text-xs font-mono font-bold tracking-wider text-brand-accent uppercase bg-indigo-500/10 px-3 py-1 bg-grid rounded-full border border-indigo-500/25">
+        {/* Head description wrapped in Reveal */}
+        <Reveal direction="up" className="text-center space-y-4 mb-16">
+          <span className="text-xs font-mono font-bold tracking-wider text-[#FF2D7A] uppercase bg-[#5B2CFF]/10 px-3 py-1 bg-grid rounded-full border border-[#5B2CFF]/25">
             CREATOR DISCOVERY EXPERIMENT
           </span>
           <h2 className="text-3xl md:text-4xl lg:text-5xl font-display font-medium text-white tracking-tight">
-            Our real-time creator <span className="text-transparent bg-clip-text bg-gradient-to-r from-brand-accent to-brand-alt">directory</span>.
+            Our real-time creator <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#FF9A1F] to-[#FF2D7A]">directory</span>.
           </h2>
           <p className="text-gray-400 max-w-xl mx-auto text-sm md:text-base">
             Instantly search over 150 million creators. Filter by platform, category, engagement spikes, and geographical hubs with zero gatekeeping.
           </p>
-        </div>
+        </Reveal>
 
         {/* Input filters search panel */}
         <div className="glass-panel rounded-2xl p-4 md:p-6 mb-8 flex flex-col gap-4 border-white/10 shadow-lg">
@@ -100,14 +104,14 @@ export default function DiscoveryEngine() {
             {/* Search Input bar */}
             <div className="relative lg:col-span-6">
               <span className="absolute inset-y-0 left-0 flex items-center pl-3 text-gray-400">
-                <Search className="w-5 h-5 text-indigo-400" />
+                <Search className="w-5 h-5 text-[#5B2CFF]" />
               </span>
               <input
                 type="text"
                 placeholder="Search creator name, handles, or specialized niches (e.g., Fashion, Tech, Baking...)..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                className="w-full pl-10 pr-4 py-3 bg-white/5 border border-white/10 rounded-xl focus:border-brand-primary/50 text-white placeholder-gray-400 focus:outline-none transition-all text-sm font-sans"
+                className="w-full pl-10 pr-4 py-3 bg-white/5 border border-white/10 rounded-xl focus:border-[#5B2CFF]/50 text-white placeholder-gray-400 focus:outline-none transition-all text-sm font-sans"
               />
             </div>
 
@@ -122,7 +126,7 @@ export default function DiscoveryEngine() {
                   onClick={() => setSelectedPlatform(platform)}
                   className={`px-3 py-2 rounded-lg text-xs font-medium border transition-all uppercase ${
                     selectedPlatform === platform
-                      ? 'bg-brand-primary text-white border-brand-primary/30 shadow-[0_0_12px_rgba(99,102,241,0.3)]'
+                      ? 'bg-[#5B2CFF] text-white border-[#5B2CFF]/30 shadow-[0_0_12px_rgba(91,44,255,0.3)]'
                       : 'bg-white/5 text-gray-300 border-white/5 hover:bg-white/10 hover:border-white/10'
                   }`}
                 >
@@ -136,15 +140,15 @@ export default function DiscoveryEngine() {
               <select
                 value={selectedNiche}
                 onChange={(e) => setSelectedNiche(e.target.value)}
-                className="w-full bg-white/5 border border-white/10 rounded-xl px-3 py-3 text-xs text-gray-300 focus:outline-none focus:border-brand-primary/50 cursor-pointer"
+                className="w-full bg-white/5 border border-white/10 rounded-xl px-3 py-3 text-xs text-gray-300 focus:outline-none focus:border-[#5B2CFF]/50 cursor-pointer"
               >
-                <option value="all" className="bg-[#0f0c1b] text-gray-300">
+                <option value="all" className="bg-[#0D0D16] text-gray-300">
                   All Categories
                 </option>
                 {niches
                   .filter((n) => n !== 'all')
                   .map((niche) => (
-                    <option key={niche} value={niche} className="bg-[#0f0c1b] text-gray-300">
+                    <option key={niche} value={niche} className="bg-[#0D0D16] text-gray-300">
                       {niche}
                     </option>
                   ))}
@@ -158,12 +162,12 @@ export default function DiscoveryEngine() {
           <AnimatePresence mode="popLayout">
             {filteredCreators.map((creator, index) => (
               <motion.div
-                layout
+                layout={reducedMotion ? false : 'position'}
                 key={creator.id}
-                initial={{ opacity: 0, scale: 0.95 }}
+                initial={{ opacity: reducedMotion ? 1 : 0, scale: reducedMotion ? 1 : 0.95 }}
                 animate={{ opacity: 1, scale: 1 }}
-                exit={{ opacity: 0, scale: 0.95 }}
-                transition={{ duration: 0.4 }}
+                exit={{ opacity: reducedMotion ? 1 : 0, scale: reducedMotion ? 1 : 0.95 }}
+                transition={reducedMotion ? { duration: 0 } : { duration: 0.4 }}
                 className="glass-panel glass-panel-hover rounded-2xl overflow-hidden p-5 flex flex-col justify-between border-white/10 relative group"
               >
                 {/* Floating platform label indicator badge */}
@@ -189,7 +193,7 @@ export default function DiscoveryEngine() {
                       />
                     </div>
                     <div className="text-left">
-                      <h4 className="text-sm font-semibold text-white group-hover:text-brand-accent transition-colors">
+                      <h4 className="text-sm font-semibold text-white group-hover:text-[#FF2D7A] transition-colors">
                         {creator.name}
                       </h4>
                       <p className="text-xs font-mono text-gray-400">{creator.handle}</p>
@@ -202,7 +206,7 @@ export default function DiscoveryEngine() {
                       {creator.niche}
                     </span>
                     <span className="flex items-center gap-1 font-mono text-[10px]">
-                      <MapPin className="w-3.5 h-3.5 text-indigo-400" />
+                      <MapPin className="w-3.5 h-3.5 text-[#A23CFF]" />
                       {creator.location}
                     </span>
                   </div>
@@ -223,7 +227,7 @@ export default function DiscoveryEngine() {
                     </div>
                     <div className="text-left">
                       <p className="text-[10px] font-mono text-gray-500 uppercase">Est. Cost</p>
-                      <p className="text-base font-bold text-brand-accent mt-0.5">
+                      <p className="text-base font-bold text-[#FF9A1F] mt-0.5">
                         ${creator.costPerPost}
                       </p>
                     </div>
@@ -237,7 +241,7 @@ export default function DiscoveryEngine() {
                       setSelectedCreator(creator);
                       handleGeneratePitch(creator);
                     }}
-                    className="w-full py-2.5 rounded-xl bg-white/5 hover:bg-brand-primary text-white border border-white/10 hover:border-brand-primary/30 text-xs font-semibold tracking-wide transition-all flex items-center justify-center gap-1.5"
+                    className="w-full py-2.5 rounded-xl bg-white/5 hover:bg-[#5B2CFF] text-white border border-white/10 hover:border-[#5B2CFF]/30 text-xs font-semibold tracking-wide transition-all flex items-center justify-center gap-1.5"
                   >
                     <span>Analyze Profile & Pitch</span>
                     <ChevronRight className="w-3.5 h-3.5" />
@@ -256,7 +260,7 @@ export default function DiscoveryEngine() {
                   setSelectedPlatform('all');
                   setSelectedNiche('all');
                 }}
-                className="mt-4 px-4 py-2 rounded-xl bg-indigo-500/10 text-indigo-300 font-semibold border border-indigo-500/20 text-xs"
+                className="mt-4 px-4 py-2 rounded-xl bg-[#5B2CFF]/10 text-[#5B2CFF]/80 font-semibold border border-[#5B2CFF]/20 text-xs"
               >
                 Clear Search Controls
               </button>
@@ -283,7 +287,7 @@ export default function DiscoveryEngine() {
                 animate={{ opacity: 1, scale: 1, y: 0 }}
                 exit={{ opacity: 0, scale: 0.95, y: 15 }}
                 transition={{ type: 'spring', duration: 0.5 }}
-                className="relative bg-[#0d0a19]/95 border border-indigo-500/20 rounded-2xl max-w-4xl w-full p-6 md:p-8 overflow-y-auto max-h-[90vh] shadow-[0_0_50px_rgba(99,102,241,0.25)] flex flex-col gap-6"
+                className="relative bg-[#0D0D16]/95 border border-[#5B2CFF]/20 rounded-2xl max-w-4xl w-full p-6 md:p-8 overflow-y-auto max-h-[90vh] shadow-[0_0_50px_rgba(91,44,255,0.25)] flex flex-col gap-6"
               >
                 {/* Close Button top-right */}
                 <button
@@ -334,7 +338,7 @@ export default function DiscoveryEngine() {
                       <p className="text-[9px] font-mono text-gray-500 uppercase leading-none font-sans">
                         Est CPM Cost
                       </p>
-                      <p className="text-base font-bold text-brand-accent mt-1.5 font-mono">
+                      <p className="text-base font-bold text-[#FF9A1F] mt-1.5 font-mono">
                         ${(selectedCreator.costPerPost / (selectedCreator.views / 1000)).toFixed(2)}
                       </p>
                     </div>
@@ -347,7 +351,7 @@ export default function DiscoveryEngine() {
                   {/* Left demographics block (Grid 5 column) */}
                   <div className="lg:col-span-5 space-y-6 text-left">
                     <div className="space-y-4">
-                      <h4 className="text-xs font-mono font-bold uppercase tracking-wider text-indigo-400 flex items-center gap-1.5">
+                      <h4 className="text-xs font-mono font-bold uppercase tracking-wider text-[#A23CFF] flex items-center gap-1.5">
                         <Flame className="w-4 h-4" /> Audience Demographics
                       </h4>
                       <div className="space-y-3">
@@ -362,7 +366,7 @@ export default function DiscoveryEngine() {
                                 initial={{ width: 0 }}
                                 animate={{ width: `${dem.percentage}%` }}
                                 transition={{ duration: 0.8, delay: 0.1 * i }}
-                                className="h-full bg-gradient-to-r from-brand-primary to-brand-accent rounded-full"
+                                className="h-full bg-gradient-to-r from-[#5B2CFF] to-[#FF2D7A] rounded-full"
                               />
                             </div>
                           </div>
@@ -372,7 +376,7 @@ export default function DiscoveryEngine() {
 
                     {/* Performance previews */}
                     <div className="space-y-4 pt-2">
-                      <h4 className="text-xs font-mono font-bold uppercase tracking-wider text-indigo-400 flex items-center gap-1.5">
+                      <h4 className="text-xs font-mono font-bold uppercase tracking-wider text-[#5B2CFF] flex items-center gap-1.5">
                         <TrendingUp className="w-4 h-4" /> Recent Performance Grids
                       </h4>
                       <div className="grid grid-cols-3 gap-2">
@@ -404,7 +408,7 @@ export default function DiscoveryEngine() {
                   <div className="lg:col-span-7 space-y-4 text-left">
                     <div className="flex items-center justify-between">
                       <h4 className="text-xs font-mono font-bold uppercase tracking-wider text-emerald-400 flex items-center gap-1.5">
-                        <MessageSquare className="w-4 h-4" /> InfluenceFlow AI Pitch Sequence
+                        <MessageSquare className="w-4 h-4" /> Creogrid AI Pitch Sequence
                       </h4>
                       <span className="text-[10px] font-mono text-gray-500 bg-white/5 px-2 py-0.5 rounded border border-white/5">
                         HIGH RESPONSE COPY
@@ -417,7 +421,7 @@ export default function DiscoveryEngine() {
                         onChange={(e) => setGeneratedPitch(e.target.value)}
                         className="w-full h-[280px] bg-white/[0.04] border border-white/10 rounded-xl p-4 text-xs font-mono text-gray-200 focus:outline-none focus:border-emerald-500/50 leading-relaxed"
                       />
-                      <div className="absolute bottom-3 right-3 text-[10px] text-gray-500 bg-[#0d0a19] px-2 py-1 rounded">
+                      <div className="absolute bottom-3 right-3 text-[10px] text-gray-500 bg-[#0D0D16] px-2 py-1 rounded">
                         Press CTA to copy or edit
                       </div>
                     </div>
@@ -426,11 +430,12 @@ export default function DiscoveryEngine() {
                     <button
                       onClick={() => {
                         navigator.clipboard.writeText(generatedPitch);
-                        alert(`Pitch template customized for ${selectedCreator.name} is successfully copied to clipboard!`);
+                        setCopiedState(true);
+                        setTimeout(() => setCopiedState(false), 2000);
                       }}
                       className="w-full py-3.5 rounded-xl bg-gradient-to-r from-emerald-600 to-teal-500 hover:brightness-110 text-white font-bold text-xs tracking-wider uppercase transition-all shadow-md shadow-emerald-600/10"
                     >
-                      ✓ Copy Customized Outreach Proposal
+                      {copiedState ? '✓ Copied to Clipboard!' : '✓ Copy Customized Outreach Proposal'}
                     </button>
                   </div>
 
