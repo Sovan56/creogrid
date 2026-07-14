@@ -1,0 +1,8 @@
+{
+  "name": "Creogrid",
+  "description": "India\u0027s next-generation Creator Discovery Platform. Build one professional profile, get verified, and get discovered by brands.",
+  "requestFramePermissions": [],
+  "majorCapabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
+}
